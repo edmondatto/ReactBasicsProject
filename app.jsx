@@ -18,6 +18,42 @@ let PLAYERS = [
 
 let nextId = 4;
 
+let Stopwatch = React.createClass({
+  getInitialState: function () {
+    return{
+      running: false,
+    }
+  },
+
+  onStart: function () {
+    this.setState({ running:true })
+  },
+
+  onStop: function () {
+    this.setState({ running: false })
+  },
+
+  onReset: function () {
+
+  },
+
+  render: function () {
+
+    return(
+     <div className="stopwatch">
+       <h2>Stopwatch</h2>
+       <div className="stopwatch-time">0</div>
+       { this.state.running ?
+         <button onClick={this.onStop}>Stop</button>
+         :
+         <button onClick={this.onStart}>Start</button>
+       }
+       <button onClick={this.onReset}>Reset</button>
+     </div>
+    );
+  }
+});
+
 let AddPlayerForm = React.createClass({
   propTypes: {
     onAdd: React.PropTypes.func.isRequired,
@@ -84,6 +120,7 @@ function Header(props) {
     <div className="header">
       <Stats players={props.players}/>
       <h1>{props.title}</h1>
+      <Stopwatch />
     </div>
   );
 }
@@ -169,7 +206,7 @@ let Application = React.createClass({
   },
 
   onRemovePlayer: function (index) {
-    let trial = this.state.players.splice(index, 1);
+    this.state.players.splice(index, 1);
     this.setState(this.state);
   },
 
